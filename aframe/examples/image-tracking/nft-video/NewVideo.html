@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Agumented Reality - Test</title>
+  <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script>
+    window.onload = function () {
+      AFRAME.registerComponent ('videohandler', {
+        init: function () {
+          var marker = this.el;
+          // Marker found.
+          marker.addEventListener ('markerFound', function () {
+            this.vid = document.querySelector ("#vid");
+            this.vid.play ();
+            // Make the video act the same way on iOS and Android (only playable by user interaction).
+            this.vid.pause ();
+            this.vid.currentTime = 0;
+            // AR button element.
+            this.but = document.querySelector ("#but");
+            // I've tried this to make the button ar element interactable but it doesn't work.
+            this.but.addEventListener ('click', function () {
+              this.vid.play ();
+            }.bind (this));
+            // HTML button play.
+            document.getElementById ("play").addEventListener ('click', function () {
+              this.vid.play ();
+            }.bind (this));
+            // HTML button pause.
+            document.getElementById ("pause").addEventListener ('click', function () {
+              this.vid.pause ();
+            }.bind (this));
+          }.bind (this));
+          // Marker lost.
+          marker.addEventListener ('markerLost', function () {
+            this.vid.pause ();
+            this.vid.currentTime = 0;
+          }.bind (this));
+        }
+      });
+    };
+  </script>
+</head>
+<body style='margin: 0px; overflow: hidden;'>
+    <a-scene vr-mode-ui="enabled: false;" render='antialias: true; alpha: true; precision: medium;' embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false; patternRatio: 0.75; maxDetectionRate: 60'>
+      <a-assets>
+        <video src="mov_bbb.mp4" id="vid" preload="auto" response-type="arraybuffer" crossorigin webkit-playsinline autoplay="false" playsinline></video>
+      </a-assets>
+      <a-marker videohandler preset='custom' type='pattern' url='pinball.jpg' smooth="true" smoothCount="2" smoothTolerance="0.01" smoothThreshold="2">
+        <a-video src="#vid" position='6 -10 0' rotation='-90 0 0' width='10' height='17.5'></a-video>
+        <!-- Add your own custom elements here -->
+      </a-marker>
+      <!-- Add your own custom elements here -->
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>

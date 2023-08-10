@@ -1,26 +1,22 @@
-<!doctype HTML>
+<!DOCTYPE html>
 <html>
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
-<script src="js/aframe.min.js"></script>
-<script src="js/aframe-ar.js"></script>
-<body style="margin: 0px; overflow: hidden;">
-
-<a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false;">
-
+<head>
+  <title>AR.js and A-Frame Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.0.7/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs="debugUIEnabled: false;">
     <a-assets>
-        <a-asset-item id="tree" src="aframe/examples/image-tracking/models/tree.gltf"></a-asset-item>
-	</a-assets>
-    
-    <a-marker type="pattern" url="aframe/examples/image-tracking/models/kanji.patt">
-        <a-entity   position="0 0 0" 
-                    rotation="0 0 0"
-                    scale="0.10 0.10 0.10"
-                    gltf-model="#tree" >
-        </a-entity>
+      <a-asset-item id="tree" src="models/tree.gltf"></a-asset-item>
+    </a-assets>
+
+    <a-marker type="pattern" url="models/LS.patt">
+      <a-gltf-model src="#tree" scale="0.1 0.1 0.1"></a-gltf-model>
     </a-marker>
-    
+
     <a-entity camera></a-entity>
-    
-</a-scene>
+  </a-scene>
 </body>
 </html>
